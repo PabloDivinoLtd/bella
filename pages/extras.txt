@@ -1,0 +1,7 @@
+$fp = fopen($comPort, "w");
+	sleep(4);
+    fwrite($fp, $theId);
+    fclose($fp);
+
+    edited: phpserial.php line: 122, 223, 291, 344, 397, 151, 663
+

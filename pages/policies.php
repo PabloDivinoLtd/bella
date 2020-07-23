@@ -40,10 +40,10 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
 		<?php include('leftbar.php')?>;
 
 
-		<div id="page-wrapper">
+		<div style="background:#008CBA;color:white" id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h4 class="page-header"> <?php echo strtoupper("welcome"." ".htmlentities($_SESSION['login']));?></h4>
+					<h4 class="page-header"> Insurance Info</h4>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
@@ -51,14 +51,14 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						<div class="panel-heading">Add Policy Plan</div>
+						<div style="background:#008CBA;color:white" class="panel-heading">Add Policy Plan</div>
 						<div class="panel-body">
 							<div class="row">
 						 	<div class="col-lg-10">
 
 							<div class="form-group">
 								<div class="col-lg-4">
-					                <label>Insurer<span id="" style="font-size:11px;color:Red">*</span>	</label>
+					                <label style="color:black">Insurer<span id="" style="font-size:11px;color:Red">*</span>	</label>
 								</div>
 			                <div class="col-lg-6">
 			                    <select class="form-control" name="insurer"  required="required" >
@@ -75,7 +75,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
 
 										<div class="form-group">
                                 		<div class="col-lg-4">
-                                		<label>Policy Name</label>
+                                		<label style="color:black">Policy Name</label>
                                 		</div>
                                 		<div class="col-lg-6">
                                 		<input required="required" class="form-control"  name="name">
@@ -85,7 +85,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
 
                                      <div class="form-group">
                                 		<div class="col-lg-4">
-                                		<label>Premium Amount</label>
+                                		<label style="color:black">Premium Amount</label>
                                 		</div>
                                 		<div class="col-lg-6">
                                 		<input required="required" class="form-control"  name="premium">
@@ -95,7 +95,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
 
                                 	<div class="form-group">
                                        <div class="col-lg-4">
-                                         <label>Sum Insured</label>
+                                         <label style="color:black">Sum Insured</label>
                                          </div>
                                          <div class="col-lg-6">
                                         <input required="required" class="form-control"  name="sum">
@@ -104,7 +104,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
                                  <br><br>
                                 	<div class="form-group">
                                 	<div class="col-lg-4">
-                                	 <label>Description</label>
+                                	 <label style="color:black">Description</label>
                                 	</div>
                                 	<div class="col-lg-6">
                                 	<textarea required="required" class="form-control"  name="description"></textarea>
@@ -120,7 +120,6 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
 											<div class="col-lg-6"><br><br>
 	<input type="submit" class="btn btn-primary" name="submit" value="Add Policy"></button>
 											</div>
-
 										</div>
 
 				</div>

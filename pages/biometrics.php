@@ -3,15 +3,19 @@ session_start ();
 if (! (isset ( $_SESSION ['login'] ))) {
 	header ( 'location:../index.php' );
 }
+if(isset($_GET['msg']) && ($_GET['msg']=="deleted")){
+                ?>
+                <script type='text/javascript'>alert("Patient Successfully Deleted");</script>
+                <?php
+            }
     include('../config/DbFunction.php');
     $obj=new DbFunction();
-	$rs=$obj->showPolicies();
+	$rs=$obj->showPatients();
 	if(isset($_GET['del']))
     {
-          $obj->delPolicy(intval($_GET['del']));
-    }
+        $obj->delPatient(intval($_GET['del']));
+  }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,43 +24,24 @@ if (! (isset ( $_SESSION ['login'] ))) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>view Policy Plans</title>
-
-    <!-- Bootstrap Core CSS -->
+    <title>Enroll Fingerprint</title>
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
     <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-
-    <!-- DataTables CSS -->
     <link href="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-
-    <!-- DataTables Responsive CSS -->
     <link href="../bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
 </head>
 
 <body>
-
     <div id="wrapper">
-
         <!-- Navigation -->
-
-      <?php include('leftbar.php')?>;
-
-
-         <nav>
+     <?php include('leftbar.php')?>;
+        <nav>
         <div style="background:#008CBA" id="page-wrapper">
             <div class="row">
-                <div style="background:#008CBA; color:white" class="col-lg-12">
-                   <h4 class="page-header"> Insurance Info</h4>
+                <div class="col-lg-12">
+                   <h4 style="color:white" class="page-header"> Biometrics </h4>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -65,7 +50,7 @@ if (! (isset ( $_SESSION ['login'] ))) {
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div style="background:#008CBA; color:white" class="panel-heading">
-                            View Policy Plans Available
+                            Select Patient to Enroll Fingerprint
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -74,34 +59,38 @@ if (! (isset ( $_SESSION ['login'] ))) {
                                     <thead>
                                         <tr>
                                             <th>S No</th>
-                                            <th>Policy Name</th>
-                                            <th>Host</th>
-                                            <th>Premium/Year</th>
-                                            <th>Sum Insured</th>
-                                            <th>Description</th>
-                                            <th>Actions</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Age</th>
+                                            <th>Gender</th>
+                                            <th>Blood Group</th>
+                                            <th>Mobile</th>
+                                            <th>Address</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                     while($res=$rs->fetch_object()){ ?>
+                                         $sn=1;
+                                     while($res=$rs->fetch_object()){?>
                                         <tr class="odd gradeX">
                                             <td><?php echo htmlentities( strtoupper($res->id));?></td>
-                                            <td><?php echo htmlentities(strtoupper($res->policyName));?></td>
-                                            <td><?php echo htmlentities(strtoupper($res->insurerID));?></td>
-                                            <td><?php echo "Ksh. ". htmlentities(strtoupper($res->premiumAmount));?></td>
-                                            <td><?php echo "Ksh. ". htmlentities(strtoupper($res->sumInsured));?></td>
-                                             <td><?php echo htmlentities($res->description);?></td>
-                                            <td>&nbsp;&nbsp;<a href="edit-sub.php?sid=<?php echo htmlentities($res->id);?>"><p class="fa fa-edit"></p></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                             <a href="viewpolicies.php?del=<?php echo htmlentities($res->id); ?>"> <p class="fa fa-times-circle"></p></td>
+                                            <td><?php echo htmlentities( strtoupper($res->firstname));?></td>
+                                            <td><?php echo htmlentities( strtoupper($res->lastname));?></td>
+                                            <td><?php echo htmlentities( strtoupper($res->age))." "."Yrs";?></td>
+                                            <td><?php echo htmlentities( strtoupper($res->gender));?></td>
+                                            <td><?php echo htmlentities( strtoupper($res->phoneNumber));?></td>
+                                            <td><?php echo htmlentities(strtoupper($res->bloodGroup));?></td>
+                                            <td><?php echo htmlentities(strtoupper($res->address));?></td>
+                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                             <a href="addfinger.php?cid=<?php echo htmlentities($res->id);?>"> <p class="fa fa-plus-circle"></p>
+                                             </td>
                                         </tr>
-
-                                    <?php }?>
+                                    <?php $sn++;}?>
                                     </tbody>
                                 </table>
                             </div>
                             <!-- /.table-responsive -->
-
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -110,12 +99,8 @@ if (! (isset ( $_SESSION ['login'] ))) {
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-
-
-
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 

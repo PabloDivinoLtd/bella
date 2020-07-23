@@ -46,17 +46,14 @@ if (! (isset ( $_SESSION ['login'] ))) {
 <body>
 
     <div id="wrapper">
-
         <!-- Navigation -->
-
       <?php include('leftbar.php')?>;
 
-
          <nav>
-        <div id="page-wrapper">
+        <div style="background:#008CBA" id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
-                   <h4 class="page-header"> <?php echo strtoupper("welcome"." ".htmlentities($_SESSION['login']));?></h4>
+                <div style="color:white" class="col-lg-12">
+                   <h4 class="page-header"> Insurance Info</h4>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -64,7 +61,7 @@ if (! (isset ( $_SESSION ['login'] ))) {
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <div style="background:#008CBA;color:white" class="panel-heading">
                             View Insurers / Hosts
                         </div>
                         <!-- /.panel-heading -->

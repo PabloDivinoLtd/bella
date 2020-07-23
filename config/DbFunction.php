@@ -156,6 +156,23 @@ include_once('config.php');
     //$alter = "update subscription set balance = '$newBalance' where id ='' ;
     header('location:../pages/addinvoice.php?msg=added');
 }
+function initialPrint($user){
+    include_once('../config/config.php');
+    $id = $_POST['theId'];
+    $defaultStatus = false;
+    $insert = "insert into prints (id, patientID, printID, status) values (0, '$id', 0, '$defaultStatus') ";
+    mysqli_query($db1, $insert) or die("Could not insert the record");
+    //header('location:../pages/addinvoice.php?msg=added');
+}
+function finalPrint($userId, $printID){
+    include_once('../config/config.php');
+    $newStatus = true;
+    $alter = mysqli_query($db1, " update prints set printID = '$printID' where id ='$userId' ") or die("Cant set initial fingerprint details with printID details");
+    $alter1 = mysqli_query($db1, "update prints set status = '$newStatus' where id ='$userId' ") or die("Cant set initial fingerprint details with status details");
+    //header('location:../pages/addinvoice.php?msg=added');
+}
+
+
 //end of class
 }
 

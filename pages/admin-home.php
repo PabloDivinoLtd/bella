@@ -43,28 +43,24 @@ if(isset($_POST['submit'])){
 <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
-<form method="post" >
-	<div id="wrapper">
+<body >
+<form  method="post" >
+	<div  id="wrapper">
 
-		<!-- Navigation -->
-		<?php include('leftbar.php')?>;
-
+<!-- Navigation -->
+<?php include('leftbar.php')?>;
 <!--nav-->
-		<div id="page-wrapper">
+		<div style="background:#008CBA" id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h4 class="page-header"> <?php echo strtoupper("welcome"." ".htmlentities($_SESSION['login']));?></h4>
+					<h4 style="color:white" class="page-header"> <?php echo strtoupper("welcome"." ".htmlentities($_SESSION['login']));?></h4>
 				</div>
 
         <div class="panel panel-default">
-
-            <div class="panel-heading">Personal Informations</div>
-                <div class="panel-body">
+            <div style="background:#008CBA; color:white"  class="panel-heading">Personal Informations</div>
+                <div  class="panel-body">
                     <div class="row">
-
                             <div class="col-lg-12">
-
                                 <div class="form-group">
                                     <div class="col-lg-2">
                                         <label>First Name<span id="" style="font-size:11px;color:red">*</span>	</label>
@@ -120,7 +116,7 @@ if(isset($_POST['submit'])){
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">Contact Informations</div>
+                                <div style="background:#008CBA; color:white" class="panel-heading">Contact Informations</div>
                                     <div class="panel-body">
                                         <div class="row">
                                     	    <div class="col-lg-12">

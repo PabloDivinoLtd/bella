@@ -34,10 +34,10 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
 	<div id="wrapper">
 		<!-- Navigation -->
 		<?php include('leftbar.php')?>;
-		<div id="page-wrapper">
+		<div style="background:#008CBA; color:white" id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h4 class="page-header"> <?php echo strtoupper("welcome"." ".htmlentities($_SESSION['login']));?></h4>
+					<h4 class="page-header"> Insurance Info</h4>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
@@ -45,13 +45,13 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
-						<div class="panel-heading">Add Host / Insurer</div>
+						<div style="background:#008CBA; color:white" class="panel-heading">Add Host / Insurer</div>
 						<div class="panel-body">
 							<div class="row">
 						 	<div class="col-lg-10">
 		<div class="form-group">
 		<div class="col-lg-4">
-		<label>Insurer Name</label>
+		<label style=" color:black">Insurer Name</label>
 		</div>
 		<div class="col-lg-6">
 		<input class="form-control" required="required" name="name" >
@@ -60,7 +60,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
 	<br><br>
      <div class="form-group">
 		<div class="col-lg-4">
-		<label>HeadQuarter Address</label>
+		<label style=" color:black">HeadQuarter Address</label>
 		</div>
 		<div class="col-lg-6">
 		<input class="form-control" required="required" name="address">

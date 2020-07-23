@@ -38,10 +38,10 @@ if(isset($_GET['msg']) && ($_GET['msg']=="deleted")){
         <!-- Navigation -->
      <?php include('leftbar.php')?>;
         <nav>
-        <div id="page-wrapper">
-            <div class="row">
+        <div style="background:#008CBA" id="page-wrapper">
+            <div  class="row">
                 <div class="col-lg-12">
-                   <h4 class="page-header"> <?php echo strtoupper("welcome"." ".htmlentities($_SESSION['login']));?></h4>
+                   <h4 style="color:white" class="page-header"> Patients Info</h4>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -49,7 +49,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="deleted")){
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <div style="background:#008CBA;color:white" class="panel-heading">
                             View Patients
                         </div>
                         <!-- /.panel-heading -->
@@ -83,10 +83,10 @@ if(isset($_GET['msg']) && ($_GET['msg']=="deleted")){
                                             <td><?php echo htmlentities( strtoupper($res->phoneNumber));?></td>
                                             <td><?php echo htmlentities(strtoupper($res->bloodGroup));?></td>
                                             <td><?php echo htmlentities(strtoupper($res->address));?></td>
-                                             <td>&nbsp;&nbsp;
+                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                              <a href="editpatient.php?cid=<?php echo htmlentities($res->id);?>"><p class="fa fa-edit"></p></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                             <a href="viewpatients.php?del=<?php echo htmlentities($res->id); ?>"> <p class="fa fa-times-circle"></p> </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                             <a href="atients.php?del=<?php echo htmlentities($res->id); ?>"> <p class="fa fa-plus-circle"></p>
+                                             <a href="viewpatients.php?del=<?php echo htmlentities($res->id); ?>"> <p class="fa fa-times-circle"></p> </a>
+
                                              </td>
 
 
