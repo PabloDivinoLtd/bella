@@ -11,7 +11,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="deleted")){
 
     include('../config/DbFunction.php');
     $obj=new DbFunction();
-	$rs=$obj->showPatients();
+	$rs=$obj->showPatientsBio();
 	if(isset($_GET['del']))
     {
         $obj->delPatient(intval($_GET['del']));
@@ -51,7 +51,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="deleted")){
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div style="background:#008CBA;color:white" class="panel-heading">
-                            View Patients
+                            Patients Registered Biometrics
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -62,12 +62,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="deleted")){
                                             <th>S No</th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
-                                            <th>Age</th>
-                                            <th>Gender</th>
-                                            <th>Mobile</th>
-                                            <th>Blood Group</th>
-                                            <th>Address</th>
-                                            <th>Action</th>
+                                            <th>Fingerprint ID</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -77,16 +72,20 @@ if(isset($_GET['msg']) && ($_GET['msg']=="deleted")){
                                      while($res=$rs->fetch_object()){?>
                                         <tr class="odd gradeX">
                                             <td><?php echo htmlentities( strtoupper($res->id));?></td>
-                                            <td><?php echo htmlentities( strtoupper($res->firstname));?></td>
-                                            <td><?php echo htmlentities( strtoupper($res->lastname));?></td>
-                                            <td><?php echo htmlentities( strtoupper($res->age))." "."Yrs";?></td>
-                                            <td><?php echo htmlentities( strtoupper($res->gender));?></td>
-                                            <td><?php echo htmlentities( strtoupper($res->phoneNumber));?></td>
-                                            <td><?php echo htmlentities(strtoupper($res->bloodGroup));?></td>
-                                            <td><?php echo htmlentities(strtoupper($res->address));?></td>
-                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                                             <a href="viewpatients.php?del=<?php echo htmlentities($res->id); ?>"> <p class="fa fa-times-circle"></p> </a>
+                                            <td><?php
+                                             include_once('../config/config.php');
+                                                $pid = $res->patientID;
+                                                $q = "select firstname, lastname from patients where id = '$pid'";
+                                                $r = mysqli_query($db1, $q) or die("Cant get pid details from db");
+                                                $result = mysqli_fetch_array($r, MYSQLI_ASSOC);
+                                                if($result>0){
+                                                $firstname = $result['firstname'];
+                                                $lastname = $result['lastname'];
+                                             }
+                                             echo htmlentities( strtoupper($firstname));?></td>
+                                            <td><?php echo htmlentities( strtoupper($lastname));?></td>
+                                            <td><?php echo htmlentities( strtoupper($res->printID));?></td>
 
                                              </td>
 

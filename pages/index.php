@@ -1,5 +1,10 @@
 <?php
 session_start();
+if(isset($_GET['msg']) && ($_GET['msg']=="fail")){
+                ?>
+                <script type='text/javascript'>alert("Username or Password Incorrect");</script>
+                <?php
+            }
 if(isset($_POST['submit'])){
 	 include('../config/DbFunction.php');
 	 $obj=new DbFunction();

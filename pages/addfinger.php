@@ -5,7 +5,6 @@ include('../config/DbFunction.php');
 	$rse=$obje->showPolicies();
 	$rs1e=$obje->showPolicies();
 	$rse = $obje->showPolicies();
-
 	$theId = $_GET['cid'];
 	$obj=new DbFunction();
     $rs=$obj->patientName($theId);
@@ -14,23 +13,53 @@ include('../config/DbFunction.php');
 if (! (isset ( $_SESSION ['login'] ))) {
 	header ( 'location:../index.php' );
 }
-    $comPort = "/dev/cu.usbmodem35";
+    $comPort = "/dev/cu.usbmodemFD141";
     include_once('PhpSerial.php');
    // $serial = new phpSerial();
     $msg = '';
   if(isset($_POST['submit'])){
+       $path = "../Arduino/enroll.ino";
+       $fp = fopen($path, "w");
+       sleep(2);
+       fwrite($fp, $theId);
+
        $serial = new phpSerial;
        $serial->deviceSet($comPort);
-       $serial->confBaudRate(9600);
+       $serial->confBaudRate(115200);
        $serial->confParity("none");
        $serial->confCharacterLength(8);
        $serial->confStopBits(1);
        $serial->deviceOpen();
        sleep(2); //arduino requires a 2 second delay in order to receive the message
        $serial->sendMessage($theId);
+       fclose($fp);
        $serial->deviceClose();
 }
 	?>
+	<?php
+ include_once('PhpSerial.php');
+$serial1 = new phpSerial();
+$statusText="Arduino Device Detected. \n";
+?>
+	<?php
+if(isset($_POST['submit'])){
+//<script type='text/javascript'>alert("Patient Successfully Registered");</script>
+//doit();
+    if($serial->deviceSet($comPort)){
+ echo "Fingerprint Registration Status. Progress Initiated...\n\n";
+   echo "Checking...\n\n";
+    echo $statusText;
+ echo "Initial User details being inserted...\n\n";
+    $theeId = $_GET['cid'];
+     $obj->initialpPrint($theeId);
+  echo "Initial insertion Done.\n";
+echo "Waiting for Arduino fingerprint Registration. \n\n";
+    echo "PRESS 'Complete Registration' BUTTON when you register Fingerprint";
+     }else{
+     echo "Failed.";
+      }
+     }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +93,7 @@ if (! (isset ( $_SESSION ['login'] ))) {
 			<div class="row">
 				<div class="col-lg-12">
 					<div  class="panel panel-default">
-						<div style="background:#008CBA; color:white" class="panel-heading">Add Patient Subscription</div>
+						<div style="background:#008CBA; color:white" class="panel-heading">Add Patient Fingerprint</div>
 						<div class="panel-body">
 							<div class="row">
 						 	<div class="col-lg-10">
@@ -87,49 +116,51 @@ if (! (isset ( $_SESSION ['login'] ))) {
 			<div class="col-lg-4">
                 </div>
                 <div class="col-lg-6">
-                    <input type="submit" class="btn btn-primary" name="submit" value="Add Fingerprint"></button>
+                    <input type="submit" id="firstB" class="btn btn-primary" name="submit" value="Add Fingerprint"></button>
+                    <?php
+                    if(isset($_POST['submit'])){?>
+                            "<script> const b = document.getElementById("firstB"); b.disabled = true; </script>";
+                            <?php
+                    } ?>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                      <input type="submit" id="secondB" class="btn btn-primary" name="complete" value="Complete Registration"></button>
+                      <?php
+                                          if(! isset($_POST['submit'])){?>
+                                                  "<script> const c= document.getElementById("secondB"); c.disabled = true; </script>";
+                                                  <?php
+                                          } ?>
+                      <?php
+                         if(isset($_POST['complete'])){
+                          $theeeId = $_GET['cid'];
+                          $obj->finalpPrint($theeeId);
+
+                      } ?>
                 </div>
 			</div>
 	</div>
 	</div>
 	</div>
 						</div>
-						<br><br><br><br><br><br>
+						<br><br><br>
 						<div class="form-group">
                             <div class="col-lg-4">
                                 <label >Fingerprint Registration Progress Status:</label>
                             </div>
                             <div class="col-lg-6">
-                            <?php
-                                include_once('PhpSerial.php');
-                                $serial1 = new phpSerial();
-                                $statusText="Arduino Device Detected. Checking fingerprint Scanner... \n";
-                                                            ?>
-                                <textarea style=" color:red" class="form-control" rows="10"  name="description">
-                                Fingerprint registration Progress... <?php
-                                if(isset($_POST['submit'])){
-                                    if($serial->deviceSet($comPort)){
-                                        echo "Fingerprint Registration Status. Progress Initiated...\n\n";
-                                        echo "Checking...\n\n";
-                                        echo $statusText;
-                                        echo "Please wait while we confirm...\n";
-                                        $fingerprintScannerMessage = '';
 
 
+                                <textarea style=" color:red" class="form-control" rows="15"  name="description">
+                                Fingerprint registration Progress...
 
-                                    }else
-                                    echo "Failed.";
-
-                                }
-
-                                ?>
 
                                 </textarea>
                             </div>
                             </div>
                         </div>
-                                                        	<br><br>
+                              <br><br>
 					</div>
+
 				</div>
 			</div>
 		</div>

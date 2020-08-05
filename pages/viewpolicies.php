@@ -22,7 +22,6 @@ if (! (isset ( $_SESSION ['login'] ))) {
     <meta name="author" content="">
 
     <title>view Policy Plans</title>
-
     <!-- Bootstrap Core CSS -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -92,7 +91,7 @@ if (! (isset ( $_SESSION ['login'] ))) {
                                             <td><?php echo "Ksh. ". htmlentities(strtoupper($res->premiumAmount));?></td>
                                             <td><?php echo "Ksh. ". htmlentities(strtoupper($res->sumInsured));?></td>
                                              <td><?php echo htmlentities($res->description);?></td>
-                                            <td>&nbsp;&nbsp;<a href="edit-sub.php?sid=<?php echo htmlentities($res->id);?>"><p class="fa fa-edit"></p></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <td>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                              <a href="viewpolicies.php?del=<?php echo htmlentities($res->id); ?>"> <p class="fa fa-times-circle"></p></td>
                                         </tr>
 

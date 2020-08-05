@@ -27,8 +27,6 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
 	<?php
 
 	?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +35,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<title></title>
+<title>Add Subscription</title>
 <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 <link href="../dist/css/sb-admin-2.css" rel="stylesheet">

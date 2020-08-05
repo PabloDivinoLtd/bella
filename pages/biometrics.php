@@ -8,6 +8,11 @@ if(isset($_GET['msg']) && ($_GET['msg']=="deleted")){
                 <script type='text/javascript'>alert("Patient Successfully Deleted");</script>
                 <?php
             }
+            if(isset($_GET['msg']) && ($_GET['msg']=="exists")){
+                            ?>
+                            <script type='text/javascript'>alert("Patient's Fingerprint is already enrolled!");</script>
+                            <?php
+                        }
     include('../config/DbFunction.php');
     $obj=new DbFunction();
 	$rs=$obj->showPatients();
@@ -63,8 +68,8 @@ if(isset($_GET['msg']) && ($_GET['msg']=="deleted")){
                                             <th>Last Name</th>
                                             <th>Age</th>
                                             <th>Gender</th>
-                                            <th>Blood Group</th>
                                             <th>Mobile</th>
+                                            <th>Blood Group</th>
                                             <th>Address</th>
                                             <th>Action</th>
                                         </tr>
@@ -82,7 +87,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="deleted")){
                                             <td><?php echo htmlentities( strtoupper($res->phoneNumber));?></td>
                                             <td><?php echo htmlentities(strtoupper($res->bloodGroup));?></td>
                                             <td><?php echo htmlentities(strtoupper($res->address));?></td>
-                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                              <a href="addfinger.php?cid=<?php echo htmlentities($res->id);?>"> <p class="fa fa-plus-circle"></p>
                                              </td>
                                         </tr>

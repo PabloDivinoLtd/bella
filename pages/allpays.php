@@ -3,26 +3,19 @@ session_start ();
 if (! (isset ( $_SESSION ['login'] ))) {
 	header ( 'location:../index.php' );
 }
-if(isset($_GET['msg']) && ($_GET['msg']=="exists")){
+if(isset($_GET['msg']) && ($_GET['msg']=="deleted")){
                 ?>
-                <script type='text/javascript'>alert("Patient is already enrolled for that package");</script>
+                <script type='text/javascript'>alert("Patient Successfully Deleted");</script>
                 <?php
             }
     include('../config/DbFunction.php');
-    $obje=new DbFunction();
-    $rse=$obje->showPolicies();
-    $rs1e=$obje->showPolicies();
-    $rse = $obje->showPolicies();
-
     $obj=new DbFunction();
-	$rs=$obj->showSubs();
-
+	$rs=$obj->showPayments();
 	if(isset($_GET['del']))
     {
-          $obj->delSubs(intval($_GET['del']));
-    }
+        $obj->delPatient(intval($_GET['del']));
+  }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,34 +24,24 @@ if(isset($_GET['msg']) && ($_GET['msg']=="exists")){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>View Subscriptions</title>
-
-    <!-- Bootstrap Core CSS -->
+    <title>All Payments</title>
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
     <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-
-    <!-- DataTables CSS -->
     <link href="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
-
-    <!-- DataTables Responsive CSS -->
     <link href="../bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-    <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
+
 <body>
     <div id="wrapper">
         <!-- Navigation -->
-      <?php include('leftbar.php')?>;
-      <nav>
-        <div style="background:#008CBA" id="page-wrapper">
+     <?php include('leftbar.php')?>;
+        <nav>
+        <div style="background:#008CBA; " id="page-wrapper">
             <div class="row">
-                <div style="background:#008CBA; color:white"class="col-lg-12">
-                   <h4 class="page-header">Insurance Info</h4>
+                <div style="background:#008CBA; color:white" class="col-lg-12">
+                   <h4 class="page-header"> Invoices Info</h4>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -67,7 +50,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="exists")){
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div style="background:#008CBA; color:white" class="panel-heading">
-                            View Subscriptions
+                            All Payments
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -76,70 +59,52 @@ if(isset($_GET['msg']) && ($_GET['msg']=="exists")){
                                     <thead>
                                         <tr>
                                             <th>S No</th>
-                                            <th>Patient ID</th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
-
-                                            <th>Policy Cover ID</th>
-                                            <th>Subscription Date</th>
-                                            <th>Sum Insured</th>
-
-                                            <th>Balance</th>
-                                            <th>Actions</th>
+                                            <th>Policy Used</th>
+                                            <th>Amount Paid</th>
+                                            <th>Payment Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                     while($res=$rs->fetch_object() ){
+                                         $sn=1;
+                                     while($res=$rs->fetch_object()){
                                      ?>
                                         <tr class="odd gradeX">
                                             <td><?php echo htmlentities( strtoupper($res->id));?></td>
 
-                                            <td><?php echo htmlentities(strtoupper($res->patientID));?></td>
+                                            <td><?php
+                                             include_once('../config/config.php');
+                                                 $pid = $res->patientID;
+                                                 $q = "select firstname, lastname from patients where id = '$pid'";
+                                                 $r = mysqli_query($db1, $q) or die("Cant get pid details from db");
+                                                 $result = mysqli_fetch_array($r, MYSQLI_ASSOC);
+                                                 if($result>0){
+                                                    $firstname = $result['firstname'];
+                                                    $lastname = $result['lastname'];
+                                                    }
+                                                    echo htmlentities(strtoupper($firstname));?></td>
+                                            <td><?php echo htmlentities( strtoupper($lastname));?></td>
 
                                             <td><?php
-                                            include('../config/config.php');
-                                            $idd = $res->patientID;
-                                             $q = "select firstname, lastname from patients where id = '$idd'";
-                                             $r = mysqli_query($db1, $q) or die("Not fetching f and l");
+                                            include_once('../config/config.php');
+                                             $poid = $res->policyID;
+                                            $q = "select policyName from insurancePolicy where id = '$poid'";
+                                            $r = mysqli_query($db1, $q) or die("Cant get pid details from db");
                                              $result = mysqli_fetch_array($r, MYSQLI_ASSOC);
                                              if($result>0){
-                                             $firstname = $result['firstname'];
-                                             $lastname = $result['lastname'];
+                                             $tname = $result['policyName'];
                                              }
-                                             echo htmlentities(strtoupper($firstname));?></td>
-                                            <td><?php echo htmlentities(strtoupper($lastname));?></td>
+                                            echo htmlentities( strtoupper($tname));?></td>
+
+                                            <td><?php echo htmlentities( strtoupper($res->amountPaid));?></td>
+                                            <td><?php echo "KSh " . htmlentities( strtoupper($res->date));?></td>
 
 
-                                            <td><?php
-                                            $iddd = $res->policyID;
-                                            $qq = "select policyName from insurancePolicy where id = '$iddd'";
-                                            $rr = mysqli_query($db1, $qq) or die("Not fetching f and l");
-                                            $rresult = mysqli_fetch_array($rr, MYSQLI_ASSOC);
-                                            if($rresult>0){
-                                            $policyname = $rresult['policyName'];
-
-                                            }
-                                            echo htmlentities(strtoupper($policyname));?></td>
-
-                                            <td><?php echo htmlentities(strtoupper($res->subscriptionDate));?></td>
-                                            <td><?php
-                                            $iddd = $res->policyID;
-                                            $qq = "select sumInsured from insurancePolicy where id = '$iddd'";
-                                            $rr = mysqli_query($db1, $qq) or die("Not fetching f and l");
-                                            $rresult = mysqli_fetch_array($rr, MYSQLI_ASSOC);
-                                            if($rresult>0){
-                                            $sum = $rresult['sumInsured'];
-                                            }
-                                            echo htmlentities(strtoupper($sum));?> </td>
-                                            <td><?php echo htmlentities(strtoupper($res->balance));?></td>
-
-
-                                            <td>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                             <a href="view-subject.php?del=<?php echo htmlentities($res->id); ?>"> <p class="fa fa-times-circle"></p></td>
                                         </tr>
-                                    <?php }?>
 
+                                    <?php $sn++;}?>
                                     </tbody>
                                 </table>
                             </div>

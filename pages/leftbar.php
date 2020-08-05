@@ -27,6 +27,9 @@
                                 <li>
                                     <a style="color:black" href="biometrics.php">Enroll Biometric</a>
                                 </li>
+                                <li>
+                                    <a style="color:black" href="registeredbio.php">Biometric Registered Patients</a>
+                                </li>
                             </ul>
                         </li>
                 
@@ -53,9 +56,6 @@
                                 </li>
                             </ul>
                         </li>
-
-
-
                         <li>
                            <a style="color:black" href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Invoice<span class="fa arrow"></span></a>
                            <ul class="nav nav-second-level">
@@ -63,19 +63,31 @@
                                    <a style="color:black" href="addinvoice.php">Invoice Patient</a>
                                </li>
                                <li>
+                                    <a style="color:black" href="viewinvoices.php">All Invoices</a>
+                               </li>
+                               <li>
                                    <a style="color:black" href="payment.php">Accept Payment</a>
+                               </li>
+                               <li>
+                                   <a style="color:black" href="allpays.php">All Payments</a>
                                </li>
                                <li>
                                    <a style="color:black" href="reports.php">Reports</a>
                                </li>
+
                             </ul>
                         </li>
+
+
+
+
+
+
+
                    <li>
                             <a style="color:black" href="logout.php"><i class="fa fa-bar-chart-o fa-fw"></i>Logout<span class="fa arrow"></span></a>
                   </li>
                   </ul>      				  
                 </div>
-               
             </div>
-            
         </nav>

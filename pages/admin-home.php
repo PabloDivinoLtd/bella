@@ -1,5 +1,3 @@
-
-
 <?php
 session_start ();
 if (! (isset ( $_SESSION ['login'] ))) {
@@ -125,7 +123,7 @@ if(isset($_POST['submit'])){
                                     			        <label>Mobile Number<span id="" style="font-size:11px;color:red">*</span>	</label>
                                     			    </div>
                                     			    <div class="col-lg-4">
-                                    			        <input class="form-control" type="number" name="mobno" required="required" maxlength="10">
+                                    			        <input class="form-control" type="text" name="mobno" required="required" maxlength="10">
                                     			    </div>
                                     			    <div class="col-lg-2">
                                     			        <label>Address</label>

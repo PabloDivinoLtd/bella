@@ -1,87 +1,66 @@
-#include <ArduinoHttpClient.h>
-
-#ifdef ESP32
-  #include <WiFi.h>
-  #include <HTTPClient.h>
-#else
-  #include <WiFiClient.h>
-#endif
-
-// Replace with your network credentials
-const char* ssid     = "REPLACE_WITH_YOUR_SSID";
-const char* password = "REPLACE_WITH_YOUR_PASSWORD";
-
 #include <Adafruit_Fingerprint.h>
 SoftwareSerial mySerial(2, 3);
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 
-const char* servername = "localhost/bella/scannerstatus.php";
-String apiKeyValue = "tPmAT5Ab3j7F9";
-
-uint8_t id;
+uint8_t id, option;
 int userId;
-int usbnumber ;
-String httpRequestData;
-
-void setup() {
- Serial.begin(9600);
-  while (!Serial);  // For Yun/Leo/Micro/Zero/...
+void setup()  
+{
+  Serial.begin(9600);
+  while (!Serial);  
   delay(100);
-  Serial.println("\n\nAdafruit Fingerprint sensor enrollment");
-
   // set the data rate for the sensor serial port
   finger.begin(57600);
-  bool found = true;
-  bool notFound = false; 
+  Serial.println("\n\n\t\t\t\t\t\tMEDICAL INSURANCE BIOMETRIC ENROLLMENT");
   if (finger.verifyPassword()) {
-    Serial.println("Found fingerprint sensor!");
-    httpRequestData = found;
+    Serial.println("\t\t\t\t\tREADY TO ENROLL PATIENT FINGERPRINT TO DATABASE");
+    Serial.println("\t\t\t\t\t\tSystem Developed by Bella @2020");
+    Serial.println("\t\t.....................................................................................................\n\n");
   } else {
-    Serial.println("Did not find fingerprint sensor :(");
-    httpRequestData = notFound;
+    Serial.println("Scanner not found. \nKindly check whether the Scanner is properly connected.");
     while (1) { delay(1); }
   }
-  
 }
 
-void loop() {
-HTTPClient http;
+uint8_t readnumber(void) {
+  uint8_t num = 0;
   
-  http.begin(serverName);
-  //http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-  int httpResponseCode = http.POST(httpRequestData);
-  if (httpResponseCode>0) {
-        Serial.print("HTTP Response code: ");
-        Serial.println(httpResponseCode);
-      }
-      else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
-      }
-      // Free resources
-      http.end();
+  while (num == 0) {
+    while (! Serial.available());
+    num = Serial.parseInt();
+  }
+  return num;
+}
 
+void loop()                     // run over and over again
+{
+  Serial.println("Scanner Found. Proceeding to enroll a fingerprint...\n"); 
+  Serial.println("STEP 1: Please type in Patients ID above and hit Enter ...\n");
+  id = readnumber();
+  if (id == 0) {// ID #0 not allowed, try again!
+    Serial.println("You cannot enroll patient with ID 0");
+     return;
+  }
+  Serial.print("Thank you. Enrolling Patient ID #");
+  Serial.println(id);
   
-  if (Serial.available() > 0) { //if there is anything on the serial port, read it
-        usbnumber = Serial.read(); //store it in the usbnumber variable
-    }
-     //if we read something
-     Serial.print("The userID from PHP is: ");Serial.print(usbnumber);
-     while (!  getFingerprintEnroll() );
-      //usbnumber = 0; //reset
-   }
+  while (!  getFingerprintEnroll() );
+  
+}
+  
 uint8_t getFingerprintEnroll() {
 
   int p = -1;
-  Serial.print("Waiting for valid finger to enroll as #"); Serial.println(usbnumber);
+  Serial.print("STEP 2: Please press Patients finger on the scanner..."); //Serial.println(id);
   while (p != FINGERPRINT_OK) {
     p = finger.getImage();
     switch (p) {
     case FINGERPRINT_OK:
-      Serial.println("Image taken");
+      Serial.println("Fingerprint image has been taken taken...Now converting");
       break;
     case FINGERPRINT_NOFINGER:
-      Serial.println(".");
+      Serial.println("waiting for finger...");
+      delay(2000);
       break;
     case FINGERPRINT_PACKETRECIEVEERR:
       Serial.println("Communication error");
@@ -100,7 +79,7 @@ uint8_t getFingerprintEnroll() {
   p = finger.image2Tz(1);
   switch (p) {
     case FINGERPRINT_OK:
-      Serial.println("Image converted");
+      Serial.println("Fingerprint Image has been converted\n\n");
       break;
     case FINGERPRINT_IMAGEMESS:
       Serial.println("Image too messy");
@@ -119,23 +98,24 @@ uint8_t getFingerprintEnroll() {
       return p;
   }
   
-  Serial.println("Remove finger");
+  Serial.println("Please remove the finger\n");
   delay(2000);
   p = 0;
   while (p != FINGERPRINT_NOFINGER) {
     p = finger.getImage();
   }
-  Serial.print("ID "); Serial.println(usbnumber);
+  //Serial.print("Patient ID being enrolled: "); Serial.println(id);
   p = -1;
-  Serial.println("Place same finger again");
+  Serial.println("STEP 3: Press the same finger again...\n");
   while (p != FINGERPRINT_OK) {
     p = finger.getImage();
     switch (p) {
     case FINGERPRINT_OK:
-      Serial.println("Image taken");
+      Serial.println("Thank you. Fingerprint Image has been taken. Converting...\n");
       break;
     case FINGERPRINT_NOFINGER:
-      Serial.print(".");
+      Serial.println("waiting finger...");
+      delay(2000);
       break;
     case FINGERPRINT_PACKETRECIEVEERR:
       Serial.println("Communication error");
@@ -154,7 +134,7 @@ uint8_t getFingerprintEnroll() {
   p = finger.image2Tz(2);
   switch (p) {
     case FINGERPRINT_OK:
-      Serial.println("Image converted");
+      Serial.println("Second fingerprint Image has been converted\n");
       break;
     case FINGERPRINT_IMAGEMESS:
       Serial.println("Image too messy");
@@ -174,26 +154,29 @@ uint8_t getFingerprintEnroll() {
   }
   
   // OK converted!
-  Serial.print("Creating model for #");  Serial.println(usbnumber);
-  
+  Serial.print("Please Wait while we create a fingerprint model for the Patient ID #");  Serial.println(id + " \n\n");
+
   p = finger.createModel();
   if (p == FINGERPRINT_OK) {
-    Serial.println("Prints matched!");
+    Serial.println("FingerPrints Matched. Storing...\n");
   } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
     Serial.println("Communication error");
     return p;
   } else if (p == FINGERPRINT_ENROLLMISMATCH) {
-    Serial.println("Fingerprints did not match");
+    Serial.println("Fingerprints did not match. Please Enroll Again");
     return p;
   } else {
     Serial.println("Unknown error");
     return p;
   }   
   
-  Serial.print("ID "); Serial.println(usbnumber);
-  p = finger.storeModel(usbnumber);
+  //Serial.print("Patient ID: "); Serial.println(id);
+  p = finger.storeModel(id);
+  
   if (p == FINGERPRINT_OK) {
-    Serial.println("Stored!");
+    Serial.println("DONE: Patient fingerprint registered and Stored. Press the Complete Registration button on your WebPage to finalize the process\n\n");
+    Serial.println("Close down arduino to save on memory");
+    delay(15000000000);
   } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
     Serial.println("Communication error");
     return p;
@@ -207,4 +190,6 @@ uint8_t getFingerprintEnroll() {
     Serial.println("Unknown error");
     return p;
   }   
+
+  
 }

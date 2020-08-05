@@ -72,7 +72,6 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
 					        </div>
 					    </div>
 								<br><br>
-
 										<div class="form-group">
                                 		<div class="col-lg-4">
                                 		<label style="color:black">Policy Name</label>
@@ -82,7 +81,6 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
                                 	</div>
                                 	 </div>
                                 	<br><br>
-
                                      <div class="form-group">
                                 		<div class="col-lg-4">
                                 		<label style="color:black">Premium Amount</label>
@@ -92,7 +90,6 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
                                 	 </div>
                                 	 </div>
                                 	<br><br>
-
                                 	<div class="form-group">
                                        <div class="col-lg-4">
                                          <label style="color:black">Sum Insured</label>

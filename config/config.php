@@ -5,7 +5,6 @@ $password =  "";
 $database = "patients";
 
 $db1 = new mysqli($host, $user, $password, $database);
-$api_key_value = "tPmAT5Ab3j7F9";
 if($db1->connect_errno > 0){
     die('Unable to connect to database' . $db1->connect_error);
 }else{

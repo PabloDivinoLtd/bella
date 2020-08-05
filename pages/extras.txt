@@ -5,3 +5,25 @@ $fp = fopen($comPort, "w");
 
     edited: phpserial.php line: 122, 223, 291, 344, 397, 151, 663
 
+	<?php
+                                    include_once('../config/config.php');
+                                    $theId = $_GET['cid'];
+                                    if(isset($_POST['submit'])){
+                                        echo "Confirming Cutomer Balance...\n\n";
+                                        $query = mysqli_query($db1, "select balance from subscriptions where id = '$theId' ") or die();
+                                        $result = mysqli_fetch_array($query, MYSQLI_ASSOC);
+                                            if(($result>0)){ //there is a record
+                                                if($result['balance'] >0){
+                                                    $bal = $result['balance'];
+                                                    echo "Customer balance: " . $bal."\n\n" ;
+                                                    if($bal > $theAmount){
+                                                        if($serial->deviceSet($comPort)){
+                                                           echo "Fingerprint Registration Status. Progress Initiated...\n\n";
+                                                           echo "Checking Arduino...\n\n";
+                                                           echo $statusText;
+                                        }else
+                                        echo "Failed";
+
+                                    }
+                                    }
+?>

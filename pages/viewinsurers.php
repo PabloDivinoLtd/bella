@@ -84,8 +84,10 @@ if (! (isset ( $_SESSION ['login'] ))) {
                                             <td><?php echo htmlentities( strtoupper($res->id));?></td>
                                             <td><?php echo htmlentities(strtoupper($res->insurerName));?></td>
                                              <td><?php echo htmlentities(strtoupper($res->address));?></td>
-                                            <td>&nbsp;&nbsp;<a href="edit-sub.php?sid=<?php echo htmlentities($res->id);?>"><p class="fa fa-edit"></p></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <td>
+                                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                              <a href="view-subject.php?del=<?php echo htmlentities($res->id); ?>"> <p class="fa fa-times-circle"></p></td>
+                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         </tr>
 
                                     <?php $sn++;}?>
