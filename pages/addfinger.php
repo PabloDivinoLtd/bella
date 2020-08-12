@@ -17,7 +17,7 @@ if (! (isset ( $_SESSION ['login'] ))) {
     include_once('PhpSerial.php');
    // $serial = new phpSerial();
     $msg = '';
-  if(isset($_POST['submit'])){
+ /* if(isset($_POST['submit'])){
        $path = "../Arduino/enroll.ino";
        $fp = fopen($path, "w");
        sleep(2);
@@ -34,7 +34,7 @@ if (! (isset ( $_SESSION ['login'] ))) {
        $serial->sendMessage($theId);
        fclose($fp);
        $serial->deviceClose();
-}
+}*/
 	?>
 	<?php
  include_once('PhpSerial.php');
@@ -45,19 +45,20 @@ $statusText="Arduino Device Detected. \n";
 if(isset($_POST['submit'])){
 //<script type='text/javascript'>alert("Patient Successfully Registered");</script>
 //doit();
-    if($serial->deviceSet($comPort)){
- echo "Fingerprint Registration Status. Progress Initiated...\n\n";
-   echo "Checking...\n\n";
+    //if($serial->deviceSet($comPort)){
+    echo "Fingerprint Registration Status. Progress Initiated...\n\n";
+    echo "Checking...\n\n";
     echo $statusText;
- echo "Initial User details being inserted...\n\n";
+    echo "Initial User details being inserted...\n\n";
     $theeId = $_GET['cid'];
-     $obj->initialpPrint($theeId);
-  echo "Initial insertion Done.\n";
-echo "Waiting for Arduino fingerprint Registration. \n\n";
+    $obj->initialpPrint($theeId);
+    echo "Initial insertion Done.\n";
+    echo "Waiting for Arduino fingerprint Registration. \n\n";
     echo "PRESS 'Complete Registration' BUTTON when you register Fingerprint";
-     }else{
-     echo "Failed.";
-      }
+   // }
+   // else{
+   // echo "Failed.";
+   //  }
      }
 ?>
 <!DOCTYPE html>

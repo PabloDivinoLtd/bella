@@ -4,6 +4,7 @@ include('../config/DbFunction.php');
 	$obje=new DbFunction();
 	$theId = $_GET['cid'];
 	$patId = $_GET['pid'];
+	$invId = $_GET['did'];
 	$theAmount = $_GET['amount'];
 	$one; $two; $three; $four;
 	$obj=new DbFunction();
@@ -22,7 +23,7 @@ if (! (isset ( $_SESSION ['login'] ))) {
 
     }
 
-  if(isset($_POST['submit'])){
+ /* if(isset($_POST['submit'])){
        $path = "../Arduino/enroll.ino";
        $fp = fopen($path, "w");
        sleep(2);
@@ -39,7 +40,7 @@ if (! (isset ( $_SESSION ['login'] ))) {
        $serial->sendMessage($theId);
        fclose($fp);
        $serial->deviceClose();
-}
+}*/
 	?>
 	 <?php
                                     include_once('PhpSerial.php');
@@ -159,7 +160,7 @@ if (! (isset ( $_SESSION ['login'] ))) {
                                              if(isset($_POST['complete'])){
                                               $invoiceId = $_GET['cid'];
                                               $amount = $_GET['amount'];
-                                              $obj->payment($invoiceId, $pid, $amount, $patId);
+                                              $obj->payment($invId, $pid, $amount, $patId);
                                               //echo "Sending";
                                           } ?>
                 </div>
@@ -190,15 +191,15 @@ if(($result>0)){ //there is a record
         $one = "Customer balance: Ksh." . $bal."\n\n" ;
         echo $one;
         if($bal > $theAmount){
-            if($serial->deviceSet($comPort)){
+           // if($serial->deviceSet($comPort)){
                 echo "Fingerprint Registration Status. Progress Initiated...\n\n";
                 echo "Checking...\n\n";
-                echo $statusText;
+               // echo $statusText;
                 echo "Waiting for Arduino fingerprint Verification. \n\n";
                 echo "PRESS 'Complete Payment' BUTTON when you Authenticate Fingerprint";
-             }else{
-             echo "Failed.";
-              }
+            // }else{
+            // echo "Failed.";
+             // }
             }
         }else  echo "Insufficient Balance to cover this invoice\n\n" ;
     } else echo "Insufficient Balance to cover this invoice\n\n" ;

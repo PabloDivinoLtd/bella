@@ -106,7 +106,7 @@ if(isset($_GET['msg']) && ($_GET['msg']=="added")){
                                              <td>&nbsp;&nbsp;
                                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                               &nbsp;&nbsp;
-                                             <a href="accept.php?cid=<?php echo htmlentities($res->id); ?>&amount=<?php echo htmlentities($res->amount); ?>&pid=<?php echo htmlentities($pid); ?>"> <p class="fa fa-plus-circle"></p>
+                                             <a href="accept.php?did=<?php echo htmlentities($res->id); ?>&cid=<?php echo htmlentities($pid); ?>&amount=<?php echo htmlentities($res->amount); ?>&pid=<?php echo htmlentities($pid); ?>"> <p class="fa fa-plus-circle"></p>
                                              </td>
                                         </tr>
 
